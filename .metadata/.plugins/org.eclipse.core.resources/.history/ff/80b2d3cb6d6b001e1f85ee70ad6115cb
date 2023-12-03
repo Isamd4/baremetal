@@ -1,0 +1,92 @@
+//#include "stm32f446xx.h"
+//the button is connected to pc13
+//port C
+//pin 13
+
+//port c is connected to AHB1
+
+#define PERIPH_BASE (0x40000000U)
+
+#define AHB1_OFFSET (0x00020000U)
+#define AHB1_BASE (PERIPH_BASE + AHB1_OFFSET)
+
+#define GPIOC_OFFSET (0x00000800U)
+#define GPIOC_BASE (AHB1_BASE + GPIOC_OFFSET)
+
+//The way to turn on the bus
+#define RCC_OFFSET (0x00003800U)
+#define RCC_BASE (AHB1_BASE + RCC_OFFSET)
+
+//now I need to go and enable the RCC AHB1
+#define RCC_AHB1ENR_OFFSET (0x30U)
+#define RCC_AHB1ENR_BASE (*(volatile unsigned int*)(RCC_BASE + RCC_AHB1ENR_OFFSET))
+#define RCC_AHB1ENR_GPIOC_EN (1<<2)
+
+//the mode of the PC13
+#define GPIOC_MODER_OFFSET (0x00U)
+#define GPIOC_MODER_BASE (*(volatile unsigned int*)(GPIOC_BASE + GPIOC_MODER_OFFSET))
+//now set it as input of pin 13
+// we need to have 00 for bit 26 and 27
+#define reset_bit26 (0<<26)
+#define reset_bit27 (0<<27)
+
+//input regiseter
+#define GPIOC_IDR_OFFSET (0x10)
+#define GPIOC_IDR_BASE (*(volatile unsigned int*)(GPIOC_BASE + GPIOC_IDR_OFFSET))
+
+int main(void){
+
+	//enable rcc
+	RCC_AHB1ENR_BASE |= RCC_AHB1ENR_GPIOC_EN;
+
+	//mode of the GPIOC
+	GPIOC_MODER_BASE |= reset_bit26;
+	GPIOC_MODER_BASE |= reset_bit27;
+
+	while(1){
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#define GPIOBEN (1U << 1)
+//#define PIN7	(1U << 7)
+//#define SET7 PIN7
+//#define RESET7 (1U << 23)
+//int main (void){
+//
+//	RCC->AHB1ENR |= GPIOBEN;
+//
+//	GPIOB->MODER |= (1U<<14);
+//	GPIOB->MODER &= ~(1U<<15);
+//	while(1){
+//		GPIOB->BSRR = SET7;
+//		for(int i=0;i<1000000;i++){}
+//		GPIOB->BSRR = RESET7;
+//		for(int i=0;i<100000;i++){}
+//	}
+//}

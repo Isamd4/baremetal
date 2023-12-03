@@ -1,0 +1,6 @@
+//where is the LED connected
+//where is the port:A
+//which pin:5
+// peripherals starting address 0x4000 0000
+
+#define PERIHERAL_BASE (0x40000000UL)

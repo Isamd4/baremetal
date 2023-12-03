@@ -1,0 +1,24 @@
+21:31:04 **** Build of configuration Debug for project 07_uart_modular ****
+make -j16 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446ZETx -c -I../Inc -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Device/ST/STM32F4xx/Include -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446ZETx -c -I../Inc -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Device/ST/STM32F4xx/Include -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446ZETx -c -I../Inc -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Device/ST/STM32F4xx/Include -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc "../Src/uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446ZETx -c -I../Inc -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Device/ST/STM32F4xx/Include -I/home/isamd/Documents/Stm32f446_Baremetal_Workspace/headers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/uart.d" -MT"Src/uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/uart.o"
+arm-none-eabi-gcc -o "07_uart_modular.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/isamd/Documents/Stm32f446_Baremetal_Workspace/07_uart_modular/STM32F446ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="07_uart_modular.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 07_uart_modular.elf
+ 
+arm-none-eabi-size   07_uart_modular.elf 
+arm-none-eabi-objdump -h -S  07_uart_modular.elf  > "07_uart_modular.list"
+   text	   data	    bss	    dec	    hex	filename
+   5204	    100	   1900	   7204	   1c24	07_uart_modular.elf
+Finished building: default.size.stdout
+ 
+Finished building: 07_uart_modular.list
+ 
+21:31:22 **** Incremental Build of configuration Debug for project 07_uart_modular ****
+make -j16 all 
+arm-none-eabi-size   07_uart_modular.elf 
+   text	   data	    bss	    dec	    hex	filename
+   5204	    100	   1900	   7204	   1c24	07_uart_modular.elf
+Finished building: default.size.stdout
+ 

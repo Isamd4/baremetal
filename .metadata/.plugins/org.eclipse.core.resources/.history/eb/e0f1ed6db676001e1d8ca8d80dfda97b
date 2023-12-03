@@ -1,0 +1,26 @@
+#include "stm32f446xx.h"
+
+
+#define GPIOAEN (1U<<0)
+#define UART2EN (1U<<17)
+
+//to know the GPIO pin the uart2 uses we go to the alternate functions.
+//uart_tx is PA2, and then AF7
+int main (void){
+
+}
+void uart2_tx_init(void){
+	//configure uart gpio pin
+	//Enable clock access gpioa
+	RCC->AHB1ENR |= GPIOAEN;
+	//set PA2 mode to alternate function modes
+	GPIOA_MODER |= (1U<<5);
+	GPIOA_MODER |= (0U<<4);
+	//set PA2 alternate function type to UART tx
+
+	//configure uart module
+	//enable clock access uart2
+	//configure uart baudrate
+	//configure the transfer directio
+	//enable the uart module
+}

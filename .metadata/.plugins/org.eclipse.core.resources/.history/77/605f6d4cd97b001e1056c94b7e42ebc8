@@ -1,0 +1,27 @@
+#include "stm32f446xx.h"
+
+
+
+//uart2-> APB1
+// we want to concentrate on TX
+//goto APB2, RCC of it
+
+//alternate functino
+//uart2_TX -> PA2,AF7
+
+//port A
+#define GPIOA_EN (1<<0)
+//mode-> set 10 as alternate on
+	//pos 5 and 4 respectively
+//gpio alternate funi->GPIOA_AFRL
+	//AFRL2 = AF7= 0111 for 11,10,9,8
+#define RCC_APB1_UART2EN (1<<17)
+int main (void){
+	RCC->APB1ENR |= RCC_APB1_UART2EN;
+	GPIOA->MODER |= (1<<5);
+	GPIOA->MODER &= ~(1<<4);
+
+	while(1){
+
+	}
+}

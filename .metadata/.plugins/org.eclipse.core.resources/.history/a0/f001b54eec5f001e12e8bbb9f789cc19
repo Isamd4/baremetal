@@ -1,0 +1,5 @@
+
+//blink user LED2 connected to PB7
+
+//first is to get the peripheral address
+#define PERIPH_BASE

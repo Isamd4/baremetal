@@ -1,0 +1,55 @@
+#include "stm32f446xx.h"
+
+
+
+//uart2-> APB1
+// we want to concentrate on TX
+//goto APB2, RCC of it
+
+//alternate functino
+//uart2_TX -> PA2,AF7
+
+//port A
+#define GPIOA_EN (1<<0)
+//mode-> set 10 as alternate on
+	//pos 5 and 4 respectively
+//gpio alternate funi->GPIOA_AFRL
+	//AFRL2 = AF7= 0111 for 11,10,9,8
+#define RCC_APB1_UART2EN (1<<17)
+int main (void){
+
+
+
+	while(1){
+
+	}
+}
+
+void uart2_tx_init(void){
+	/**configure uart gpio pin **/
+	//enable clock access to gpioa
+	RCC->AHB1ENR |= GPIOA_EN;
+	//set PA2 mode to alternate function
+	GPIOA->MODER |= (1<<5);
+	GPIOA->MODER &= ~(1<<4);
+	//set alternate function type to UART_TX (AF07)
+	GPIOA->AFR[0] |= (1<<8);
+	GPIOA->AFR[0] |= (1<<9);
+	GPIOA->AFR[0] |= (1<<10);
+	GPIOA->AFR[0] &= ~(1<<11);
+
+	 /* Configure uart module	 */
+	//enable clock access to uart2
+	RCC->APB1ENR |= RCC_APB1_UART2EN;
+	//configure uart baudrate
+	//configure transfer direction
+	//enable the uart module
+
+
+}
+static void uart_set_baudRate(USART_TypeDef *USARTx,uint32_t periphClk, uint32_t baudRate){
+	USARTx->BRR = compute_uart_bd(periphClk,baudRate);
+}
+static uint16_t compute_uart_bd(uint32_t periphClk, uint32_t baudRate){
+	return (periphClk +(baudRate/2U))/baudRate;
+}

@@ -1,0 +1,57 @@
+//toggle the blue user led
+//port B
+//pin 7
+//first we need to get the peripheral address
+
+//the portb is connected via AHB1 Bus
+
+#define PERIPH_BASE (0x40000000)
+
+//define AHB1 base also
+#define AHB1_OFFSET (0x00020000)
+#define AHB1_BASE (PERIPH_BASE + AHB1_OFFSET)
+
+//define the base for PORT B
+#define GPIOB_OFFSET (0x00000400)
+#define GPIOB_BASE (AHB1_BASE + GPIOB_OFFSET)
+
+//we need to turn on the AHB1 for the port b
+//RCC
+#define RCC_OFFSET (0x3800)
+#define RCC_BASE (AHB1_BASE + RCC_OFFSET)
+//go the register for the portb and turn it on
+//enable register for RCC_AHB1
+#define RCC_AHB1_EN_OFFSET (0x30)
+#define RCC_AHB1_EN (*(volatile unsigned int *)(RCC_BASE + RCC_AHB1_EN_OFFSET))
+#define RCC_GPIOB_EN (1<<1)
+
+//go to the GPIOB
+//mode of the pin
+#define GPIOB_MODE_OFFSET (0x00)
+#define GPIOB_MODE (*(volatile unsigned int *)(GPIOB_BASE + GPIOB_MODE_OFFSET))
+//01: general purpose output mode
+//for pin 7 it means putting bit at pos 15 low and at 14 high
+#define BIT_POS14_HIGH (1<<14)
+
+//data register of the pin
+#define GPIOB_ODR_OFFSET (0x14)
+#define GPIOB_ODR (*(volatile unsigned int *)(GPIOB_BASE + GPIOB_ODR_OFFSET))
+//pin 7
+#define GPIOB_PIN7_HIGH (1<<7)
+
+int main (void){
+
+	//rcc turn on
+	RCC_AHB1_EN |= RCC_GPIOB_EN;
+
+	//pin mode for pin 7
+	GPIOB_MODE |= BIT_POS14_HIGH;
+	GPIOB_MODE &= ~(1<<15);
+
+	while (1){
+		//toggle
+		GPIOB_ODR ^= GPIOB_PIN7_HIGH;
+		for(int i=0;i<10000;i++){}
+	}
+
+}

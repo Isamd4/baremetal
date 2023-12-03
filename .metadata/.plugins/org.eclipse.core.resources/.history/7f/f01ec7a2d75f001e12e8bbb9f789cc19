@@ -1,0 +1,57 @@
+//where is the LED connected
+//where is the port:A
+//which pin:5
+// peripherals starting address 0x4000 0000
+// the port is connected through AHB1 bus
+//AHB1 BASE
+#define PERIPH_BASE (0x40000000UL)
+
+#define AHB1_OFFSET (0x00020000UL)
+#define AHB1_BASE (PERIPH_BASE + AHB1_OFFSET)
+
+#define GPIOA_OFFSET (0x00UL)// gpio A offset is 0 because is the starting point of the AHB1
+#define GPIOA_BASE (AHB1_BASE + GPIOA_OFFSET)
+
+#define RCC_OFFSET (0x00003800UL)// the rcc is the module used for activiating the bus
+#define RCC_BASE (AHB1_BASE + RCC_OFFSET)
+
+#define RCC_AHB1ENR_OFFSET (0x30UL)
+#define RCC_AHB1ENR_BASE (*(volatile unsigned int*)(RCC_BASE + RCC_AHB1ENR_OFFSET))
+
+#define RCC_GPIOA_EN (1UL<<0) // this means append 1 at position 0
+//position 0 is dedicated for GPIOA
+
+// next is to go to the gpio register
+
+//first configure the mode (direction) the address of the of the mode register is the same as the port
+#define GPIOA_MODE_OFFSET (0x00UL)
+#define GPIOA_MODE_BASE (*(volatile unsigned int*)(GPIOA_BASE + GPIOA_MODE_OFFSET))
+//the register above is 32 bit register, there are 16 pins in the gpioa port register, each pin takes 2 bits, so
+// there fore bits at pos 0 and 1 are for pin 0
+// in our case for pin 5 it means we go the bits pos 10 and 11
+//below the GPIO port mode register we can see the truth table on how to set the mode
+// we are interested in 01
+#define PIN5_MODE_OUTPUT_SET (1UL << 10)
+
+//next is to find the data register of the GPIOA
+#define GPOIA_DATA_OFFSET (0x14UL)
+#define GPIOA_DATA_BASE (*(volatile unsigned int*)(GIPOA_BASE + GPIOA_DATA_OFFSET))
+
+//configure for pin 5
+#define PIN5_DATA_SET (1UL << 5)
+
+int main(){
+	//enable clock access to gpio a
+	//RCC_AHB1ENR_BASE= RCC_GPIOA_EN; you should nt be doing this
+	RCC_AHB1ENR_BASE |= RCC_GPIOA_EN;
+	//set PA5 to output pin
+	GPIOA_MODE_BASE |= PIN5_MODE_OUTPUT_SET;
+	GPIOA_MODE_BASE &= ~(1UL<<11);
+	while(1){
+		//toggle the PA5
+		GPIOA_DATA_BASE | = PIN5_DATA_SET;
+
+
+	}
+	return 0;
+}

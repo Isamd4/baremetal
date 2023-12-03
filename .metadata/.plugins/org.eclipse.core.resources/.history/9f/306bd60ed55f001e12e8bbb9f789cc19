@@ -1,0 +1,12 @@
+//where is the LED connected
+//where is the port:A
+//which pin:5
+// peripherals starting address 0x4000 0000
+// the port is connected through AHB1 bus
+//AHB1 BASE
+#define PERIH_BASE (0x40000000UL)
+#define AHB1_OFFSET (0x00020000UL)
+#define AHB1_BASE (PERIPH_BASE + AHB1_OFFSET)
+#define GPIOA_OFFSET (0x00U)// gpio A offset is 0 because is the starting point of the AHB1
+#define GPIO_BASE (AHB1_BASE + GPIOA_OFFSET)
+

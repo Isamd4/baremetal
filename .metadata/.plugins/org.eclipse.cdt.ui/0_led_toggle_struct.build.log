@@ -1,0 +1,17 @@
+23:19:47 **** Incremental Build of configuration Debug for project 0_led_toggle_struct ****
+make -j16 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446ZETx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "0_led_toggle_struct.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/isamd/Documents/Stm32f446_Baremetal_Workspace/0_led_toggle_struct/STM32F446ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="0_led_toggle_struct.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 0_led_toggle_struct.elf
+ 
+arm-none-eabi-size   0_led_toggle_struct.elf 
+arm-none-eabi-objdump -h -S  0_led_toggle_struct.elf  > "0_led_toggle_struct.list"
+   text	   data	    bss	    dec	    hex	filename
+    784	      8	   1568	   2360	    938	0_led_toggle_struct.elf
+Finished building: default.size.stdout
+ 
+Finished building: 0_led_toggle_struct.list
+ 
+
+23:19:48 Build Finished. 0 errors, 0 warnings. (took 169ms)
+

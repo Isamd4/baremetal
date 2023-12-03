@@ -1,0 +1,23 @@
+//blink user LED2 connected to PB7
+
+//we need to get the perpheral base
+#define PERIPH_BASE (0x40000000UL)
+
+//need to get the bus for which the port is connected to -> AHB1
+#define AHB1_OFFSET (0x00020000UL)
+#define AHB1_BASE	(PERIPH_BASE+AHB1_OFFSET)
+
+//the rcc
+#define RCC_OFFSET (0x3800UL)
+#define RCC_BASE (AHB1_BASE + RCC_OFFSET)
+//need to get how to turn on the bus for the particular port
+#define RCC_AHB1_OFFSET (0x30UL)
+#define RCC_AHB1_R (RCC_AHB1_OFFSET + RCC_BASE)
+//to enable for portb we enable the bit at pos 1
+#define RCC_PORTB_EN (1<<1)
+
+//need to get the address of the port
+
+//need to get the registers responsible for
+	//mode
+	//data

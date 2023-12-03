@@ -1,0 +1,50 @@
+
+//blink user LED2 connected to PB7
+
+//first is to get the peripheral address
+#define PERIPH_BASE (0x40000000)
+
+//need to get the bus connected to port B -- connected to AHB1 bus
+#define AHB1_OFFSET (0x00020000)
+#define AHB1_BASE (PERIPH_BASE + AHB1_OFFSET)
+
+//GPIOB
+#define GPIOB_OFFSET (0x00000400)
+#define GPIOB_BASE (AHB1_BASE + GPIOB_OFFSET)
+
+//get the address for activiating the bus - RCC
+#define RCC_OFFSET (0x3800)
+#define RCC_BASE (AHB1_BASE + RCC_OFFSET)
+
+//enabling the offset
+#define AHB1_RCC_EN_OFFSET (0x30)
+#define AHB1_RCC_EN_R (*(volatile unsigned int *)(RCC_BASE + AHB1_RCC_EN_OFFSET))
+//for port B, is bit 1
+#define RCC_PORTB_EN (1<<1);
+
+//gpio mode setup
+#define GPIOB_MODE_OFFSET (0x00)
+#define GPIOB_MODE_R (*(volatile unsigned int *)(GPIOB_BASE + GPIOB_MODE_OFFSET))
+#define GPIOB_7_OUT (1<<14)
+
+
+//gpiob data
+#define GPIOB_OUTDATA_R_OFFSET (0x14)
+#define GPIOB_OUTDATA_R (*(olatile unsigned int *)(GPIOB_BASE + GPIOB_OUTDATA_R_OFFSET))
+
+#define GPIOB_7_HIGH (1 << 7)
+
+int main (void ){
+	//enable the clocking
+	AHB1_RCC_EN_R |= RCC_PORTB_EN;
+
+	//mode to be output
+	GPIOB_MODE_R |= GPIOB_7_OUT;
+
+	GPIOB_MODE_R &= ~(1<<15);
+	while (1){
+		GPIOB_OUTDATA_R ^= GPIOB_7_HIGH;
+		for(int i=0;i<100000;i++){}
+	}
+
+}

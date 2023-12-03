@@ -1,0 +1,13 @@
+//blink user LED2 connected to PB7
+
+//we need to get the perpheral base
+#define PERIPH_BASE (0x40000000UL)
+
+//need to get the bus for which the port is connected to -> AHB1
+//need to get how to turn on the bus for the particular port
+
+//need to get the address of the port
+
+//need to get the registers responsible for
+	//mode
+	//data
